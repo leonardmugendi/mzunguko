@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Mzunguko — Partner</title>
+<style>
+  :root {
+    --bg: #f7f3ff; --card: #ffffff; --text: #241b3a; --muted: #6b6280;
+    --primary: #6d28d9; --period: #e11d48; --fertile: #0d9488; --luteal: #c026d3; --late: #d97706;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161221; --card: #221c33; --text: #f1edf9; --muted: #aaa1bf; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 520px; margin: 0 auto; padding: 24px 16px 40px; }
+  .brand { font-weight: 700; color: var(--primary); letter-spacing: .3px; }
+  .card { background: var(--card); border-radius: 20px; padding: 20px; margin-top: 16px;
+    box-shadow: 0 6px 24px rgba(60, 30, 120, .08); }
+  .phase { display: inline-block; padding: 4px 12px; border-radius: 999px; color: #fff;
+    font-weight: 600; font-size: 14px; }
+  h1 { font-size: 24px; margin: 12px 0 4px; }
+  h2 { font-size: 17px; margin: 0 0 8px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  ul { margin: 6px 0 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+  .big { font-size: 28px; font-weight: 700; }
+  .lang { float: right; }
+  .lang button { border: 0; background: none; color: var(--primary); font-weight: 600; cursor: pointer; padding: 4px; }
+  a.cta { display: block; text-align: center; margin-top: 20px; padding: 14px; border-radius: 14px;
+    background: var(--primary); color: #fff; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <div><span class="brand">Mzunguko</span>
+    <span class="lang"><button data-l="sw">Kiswahili</button>·<button data-l="en">English</button></span></div>
+  <div id="app"></div>
+  <p class="muted" id="privacy"></p>
+</main>
+<script>
+(function () {
+  var T = {
+    sw: {
+      title: function (n) { return n ? 'Mzunguko wa ' + n : 'Mzunguko wa mpenzi wako'; },
+      day: function (d) { return 'Siku ya ' + d + ' ya mzunguko'; },
+      next: 'Hedhi ijayo inatarajiwa', inDays: function (d) { return d === 0 ? 'leo' : d === 1 ? 'kesho' : d > 1 ? 'baada ya siku ' + d : 'ilitarajiwa siku ' + (-d) + ' zilizopita'; },
+      fertile: 'Siku za rutuba', support: 'Jinsi unavyoweza kusaidia', updated: function (t) { return 'Imesasishwa ' + t + '. Hii ni picha ya siku hiyo — mwombe akutumie mpya.'; },
+      privacy: 'Faragha: taarifa hizi ziko ndani ya kiungo hiki tu na zinasomwa kwenye simu yako — hazihifadhiwi popote. Tarehe ni makadirio, si uzazi wa mpango.',
+      invalid: 'Kiungo hiki hakijakamilika. Mwombe akutumie kiungo kipya kutoka programu ya Mzunguko.',
+      cta: 'Pakua Mzunguko', phases: { period: 'Hedhi', follicular: 'Awamu ya nguvu', fertile: 'Siku za rutuba', ovulation: 'Upevushaji', luteal: 'Kabla ya hedhi', late: 'Hedhi imechelewa', unknown: 'Mzunguko' },
+      tips: {
+        period: ['Mletee kinywaji cha moto au chupa ya maji ya moto kwa maumivu.', 'Saidia kazi za nyumbani leo — uchovu ni halisi.', 'Mpe nafasi ya kupumzika bila kuulizwa maswali mengi.'],
+        follicular: ['Nguvu zake zinapanda — wakati mzuri wa matembezi au mipango ya pamoja.', 'Mtie moyo kwa malengo na mawazo mapya.'],
+        fertile: ['Hizi ni siku ambazo mimba inawezekana — ongeeni kuhusu mipango yenu na kinga.', 'Mara nyingi hujisikia mchangamfu — furahieni muda pamoja.'],
+        ovulation: ['Siku yenye rutuba zaidi — ongeeni kuhusu mipango yenu na kinga.', 'Huenda akahisi maumivu madogo upande mmoja; kuwa mwenye kujali.'],
+        luteal: ['Huenda akachoka au kubadilika hisia — kuwa mvumilivu, si yeye ni homoni.', 'Vitafunio vyenye afya na usiku wa mapumziko husaidia.', 'Uliza "nikusaidie nini leo?" badala ya kubahatisha.'],
+        late: ['Hedhi kuchelewa inaweza kuleta wasiwasi — msikilize kwa utulivu.', 'Kama kuna uwezekano wa mimba, mkaonane kuhusu kipimo pamoja.'],
+        unknown: ['Muulize jinsi anavyojisikia leo na msikilize.']
+      }
+    },
+    en: {
+      title: function (n) { return n ? n + '’s cycle' : 'Your partner’s cycle'; },
+      day: function (d) { return 'Cycle day ' + d; },
+      next: 'Next period expected', inDays: function (d) { return d === 0 ? 'today' : d === 1 ? 'tomorrow' : d > 1 ? 'in ' + d + ' days' : 'was expected ' + (-d) + ' days ago'; },
+      fertile: 'Fertile window', support: 'How you can support', updated: function (t) { return 'Updated ' + t + '. This is a snapshot of that day — ask for a fresh link anytime.'; },
+      privacy: 'Privacy: this information lives only inside this link and is read on your phone — it isn’t stored anywhere. Dates are estimates, not contraception.',
+      invalid: 'This link is incomplete. Ask for a new link from the Mzunguko app.',
+      cta: 'Get Mzunguko', phases: { period: 'Period', follicular: 'Energy phase', fertile: 'Fertile window', ovulation: 'Ovulation', luteal: 'Before the period', late: 'Period is late', unknown: 'Cycle' },
+      tips: {
+        period: ['Bring a hot drink or a hot-water bottle for cramps.', 'Take on extra chores today — the tiredness is real.', 'Give space to rest without too many questions.'],
+        follicular: ['Energy is rising — a great time for walks or plans together.', 'Encourage new goals and ideas.'],
+        fertile: ['Pregnancy is possible on these days — talk about your plans and protection.', 'Often a sociable, upbeat time — enjoy time together.'],
+        ovulation: ['The most fertile day — talk about your plans and protection.', 'A mild one-sided twinge is common; be considerate.'],
+        luteal: ['Tiredness or mood swings are hormones, not personal — be patient.', 'Healthy snacks and a quiet night in help.', 'Ask “what would help today?” instead of guessing.'],
+        late: ['A late period can be stressful — listen calmly.', 'If pregnancy is possible, decide about a test together.'],
+        unknown: ['Ask how she’s feeling today, and listen.']
+      }
+    }
+  };
+  var colors = { period: 'var(--period)', fertile: 'var(--fertile)', ovulation: 'var(--fertile)', luteal: 'var(--luteal)', late: 'var(--late)' };
+
+  function decode() {
+    try {
+      var m = location.hash.match(/d=([A-Za-z0-9_-]+)/);
+      if (!m) return null;
+      var b = m[1].replace(/-/g, '+').replace(/_/g, '/');
+      while (b.length % 4) b += '=';
+      var bytes = atob(b), arr = new Uint8Array(bytes.length);
+      for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+      return JSON.parse(new TextDecoder().decode(arr));
+    } catch (e) { return null; }
+  }
+  function parse(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function fmt(k, l) { return parse(k).toLocaleDateString(l === 'sw' ? 'sw-TZ' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short' }); }
+  function daysFromToday(k) { var t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((parse(k) - t) / 86400000); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  var data = decode();
+  var lang = (data && data.l === 'en') ? 'en' : 'sw';
+
+  function render() {
+    var t = T[lang], app = document.getElementById('app');
+    document.documentElement.lang = lang;
+    app.innerHTML = '';
+    document.getElementById('privacy').textContent = t.privacy;
+    if (!data || data.v !== 1) { var c0 = el('div', 'card'); c0.appendChild(el('p', null, t.invalid)); app.appendChild(c0); return; }
+
+    var head = el('div', 'card');
+    head.appendChild(el('h1', null, t.title(data.n)));
+    if (data.p) {
+      var badge = el('span', 'phase', t.phases[data.p] || t.phases.unknown);
+      badge.style.background = colors[data.p] || 'var(--primary)';
+      head.appendChild(badge);
+    }
+    if (data.d) head.appendChild(el('p', 'muted', t.day(data.d)));
+    app.appendChild(head);
+
+    if (data.np) {
+      var c = el('div', 'card');
+      c.appendChild(el('h2', null, t.next));
+      c.appendChild(el('div', 'big', fmt(data.np, lang)));
+      c.appendChild(el('p', 'muted', t.inDays(daysFromToday(data.np))));
+      app.appendChild(c);
+    }
+    if (data.fs && data.fe) {
+      var f = el('div', 'card');
+      f.appendChild(el('h2', null, t.fertile));
+      f.appendChild(el('div', 'big', fmt(data.fs, lang) + ' – ' + fmt(data.fe, lang)));
+      app.appendChild(f);
+    }
+    var tips = t.tips[data.p] || t.tips.unknown;
+    var s = el('div', 'card');
+    s.appendChild(el('h2', null, t.support));
+    var ul = el('ul');
+    tips.forEach(function (x) { ul.appendChild(el('li', null, x)); });
+    s.appendChild(ul);
+    app.appendChild(s);
+
+    if (data.t) app.appendChild(el('p', 'muted', t.updated(fmt(data.t, lang))));
+    var a = el('a', 'cta', t.cta);
+    a.href = 'https://play.google.com/store/apps/details?id=com.leontechforge.mzunguko';
+    a.rel = 'noopener';
+    app.appendChild(a);
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-l'); render(); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
